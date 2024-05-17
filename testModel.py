@@ -47,3 +47,4 @@ for i, (original, predicted) in enumerate(zip(y_test, y_pred)):
         failed += 1
 
 print(f"Passed: {passed}, Failed: {failed}")
+print(f"Accuracy: {passed / (passed+failed)}")
