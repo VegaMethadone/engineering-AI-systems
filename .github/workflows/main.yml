@@ -11,12 +11,31 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+        
     - name: Install dependencies
       run: |
-        pip install numpy opencv-python scikit-learn joblib
+        pip install numpy opencv-python scikit-learn joblib matplotlib
+        
     - name: Run tests
       run: python testModel.py
+      
+    - name: Run report
+      run: python CML.py
+      
+    - name: Configure git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Commit and push changes
+      run: |
+        git add README.md results/
+        git commit -m "Update README.md with model evaluation report"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
